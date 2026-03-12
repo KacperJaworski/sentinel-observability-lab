@@ -24,5 +24,3 @@ Na wirtualnej maszynie z Ubuntu używam skryptów Ansible do automatycznego wdro
 
 - Install Vmware Workstation Pro 25H2
 - Download Ubuntu Server 24.04.4 LTS
-https://www.youtube.com/watch?v=cbPaxJX5XW0&t=3165s 4 30
-https://www.youtube.com/watch?v=uDXwKn5N9Yk&t=556s 23 30
