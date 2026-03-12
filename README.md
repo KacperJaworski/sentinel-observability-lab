@@ -100,4 +100,4 @@ output.elasticsearch:
 setup.kibana:
   host: "kibana:5601" 🚀
 - We have to change file owner to root by: sudo chown root filebeat.yml and sudo chmod 644 filebeat.yml
-- 
+- Now our kibana is working, and we can create dashboards
