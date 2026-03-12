@@ -1,7 +1,7 @@
 # PROJECT NOTES Project Sentinel: Full-Stack Observability & Resilience Lab
 
 STACK:
-Vmware Workstation Pro | Ubuntu | Ansible | Docker | Nginx | Bombardier | Filebeat | ELK ElasticSearch + Kibana + Kibana alert | Prometheus + NodeExporter + cAdvisor + Alert Manager | Grafana
+Vmware Workstation Pro | Ubuntu | Ansible | Docker | Nginx | Bombardier | Filebeat | ELK ElasticSearch + Kibana | Prometheus + NodeExporter + cAdvisor + Alert Manager | Grafana
 
 VMware Workstation Pro: Program do wirtualizacji, pozwalajacy na postawienie roznych OS na jednym komputerze
 Ubuntu Server: Czysty system operacyjny Linux
@@ -24,3 +24,80 @@ Na wirtualnej maszynie z Ubuntu używam skryptów Ansible do automatycznego wdro
 
 - Install Vmware Workstation Pro 25H2
 - Download Ubuntu Server 24.04.4 LTS
+- Change IP to Static by update netplan in files: (192.168.225.128/24 - VM)
+- In fluent terminal - connect ssh by kacper@192.168.225.128
+- Install Ansible in fluent
+  sudo apt update | sudo apt install ansible -y | ansible version 2.16.3
+- Open VisualStudio install remote-ssh extention
+  connect to shh in VS
+- Create new folder by mkdir project-sentinel in VS
+- Create new yaml file to install docker: 🚀
+---
+- name: Install Docker on the server
+  hosts: localhost
+  become: yes
+  tasks:
+    - name: Install Docker package
+      apt:
+        name: docker.io
+        state: present
+        update_cache: yes
+    - name: Ensure Docker service is running
+      service:
+        name: docker
+        state: started
+        enabled: yes 🚀
+      
+-  ansible-playbook install-docker.yml -K -> to install docker by yaml file
+- Create new yaml file to install nginx by docker compose: 🚀
+    services:
+    nginx:
+      image: nginx:latest
+      container_name: sentinel-nginx
+      ports:
+        - "80:80"
+      restart: unless-stopped 🚀
+- Now our site Nginx is running - ip the same as VM http://192.168.225.128
+- We are increasin mapping limit on linux by: sudo sysctl -w vm.max_map_count=262144
+- Install ElasticSearch by adding to docker-compose.yml: 🚀
+    elasticsearch:
+    image: elasticsearch:8.12.2
+    container_name: sentinel-elastic
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - ES_JAVA_OPTS=-Xms1g -Xmx1g
+    ports:
+      - "9200:9200"
+    restart: unless-stopped 🚀
+                                next: docker compose up -d
+- Now we got 2 containers in Docker: nginx and elasticsearch
+- Updating docker-compose.yml by adding kibana depends on elasticsearch: 🚀
+    kibana:
+    image: kibana:8.12.2
+    container_name: sentinel-kibana
+    environment:
+      - ELASTICSEARCH_HOSTS=http.//elasticsearch:9200
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
+    restart: unless-stopped 🚀
+- kibana - http://192.168.225.128:5601
+- Now we got 3 containers: Nginx, Elasticsearch and Kibana
+- We have to add new yaml file to configure filebeat -> to take logs from Nginx and upload them to Elasticsearch
+- filebeeat.yml: 🚀
+  filebeat.inputs:
+- type: log
+  enabled: true
+  paths:
+    - /var/log/auth.log
+    - /var/log/syslog
+
+output.elasticsearch:
+  hosts: ["elasticsearch:9200"]
+
+setup.kibana:
+  host: "kibana:5601" 🚀
+- We have to change file owner to root by: sudo chown root filebeat.yml and sudo chmod 644 filebeat.yml
+- 
