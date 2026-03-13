@@ -165,13 +165,13 @@ setup.kibana:
   - name: sentinel_alerts
     rules:
       - alert: HighCpuUsage
-        expr: 100 - (avg by (instance) (rate(node_cpu_seconds_total{mode="idle"}[1m])) * 100) > 50
+        expr: 100 - (avg by (instance) (rate(node_cpu_seconds_total{mode="idle"}[1m])) * 100) > 10
         for: 10s
         labels:
           severity: critical
         annotations:
           summary: "Critical CPU usage detected!"
-          description: "Warning! CPU usage has exceeded 50%! Attack in progress!" 🚀
+          description: "Warning! CPU usage has exceeded 10%! Attack in progress!" 🚀
 - Then alertmanager.yml: 🚀
   route:
     receiver: 'default-receiver'
