@@ -179,7 +179,7 @@ setup.kibana:
 receivers:
   - name: 'discord_alert'
     slack_configs:
-      - api_url: 'TUTAJ_WKLEJ_SWOJ_LINK/slack'
+      - api_url: 'discord_webhook_link/slack'
         send_resolved: true
         title: '[{{ .Status | toUpper }}] {{ .GroupLabels.alertname }}'
         text: '{{ range .Alerts }}{{ .Annotations.description }}{{ end }}' 🚀
