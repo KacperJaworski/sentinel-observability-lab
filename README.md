@@ -101,3 +101,63 @@ setup.kibana:
   host: "kibana:5601" 🚀
 - We have to change file owner to root by: sudo chown root filebeat.yml and sudo chmod 644 filebeat.yml
 - Now our kibana is working, and we can create dashboards
+- We are creating new file: prometheus.yml -> in this file, we are configuring prometheus, node-exporter to count procesor using and RAM on whole ubuntu server, and cadvisor to count which container using memory. prometheus.yml: 🚀
+  global:
+    scrape_interval: 15s
+
+  scrape_configs:
+    - job_name: 'prometheus'
+      static_configs:
+        - targets: ['localhost:9090']
+  
+    - job_name: 'node-exporter'
+      static_configs:
+        -targets: ['node-exporter:9100']
+
+    - job_name: 'cadvisor'
+      static_configs:
+        - targets: ['cadvisor:8080'] 🚀
+- Then, we have to modificate docker-compose.yml file: 🚀
+    prometheus:
+      image: prom/prometheus:latest
+      container_name: sentinel-prometheus
+      volumes:
+        - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      ports:
+        - "9090:9090"
+      restart: unless-stopped
+
+    node-exporter:
+      image: prom/node-exporter:latest
+      container_name: sentinel-node-exporter
+      ports:
+        - "9100:9100"
+      restart: unless-stopped
+
+    cadvisor:
+      image: gcr.io/cadvisor/cadvisor:v0.47.0
+      container_name: sentinel-cadvisor
+      volumes:
+        - /:/rootfs:ro
+        - /var/run:/var/run:ro
+        - /sys:/sys:ro
+        - /var/lib/docker/:/var/lib/docker:ro
+        - /dev/disk/:/dev/disk:ro
+      ports:
+        - "8080:8080"
+      privileged: true 
+      restart: unless-stopped 🚀
+- Prometheus: http://192.168.225.128:9090/
+- We have to configure grafana in docker-compose.yml by:
+    grafana:
+    image: grafana/grafana:latest
+    container_name: sentinel-grafana
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
+    restart: unless-stopped 🚀
+- Grafana is now working: http://192.168.225.128:3000/ -> login: admin password - the same as vm
+- We have to add data source in grafana by writing prometheus URL: http://prometheus:9090
+- 
+  
