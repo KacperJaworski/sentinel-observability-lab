@@ -184,7 +184,7 @@ receivers:
     slack_configs:
       - webhook_url: 'https://discord.com/api/webhooks/1482078156306386987/T6NQdZ6LzzyR0G6kgwJrHYYEl62vqAIO8PPQY91ZdoKhRaOqdlspmVFU5U1XHgTgRyTX'
         send_resolved: true
-        text: 'WARNING! Server attack detected! Critical CPU limit exceeded!' 🚀
+        message: 'WARNING! Server attack detected! Critical CPU limit exceeded!' 🚀
 - Edit file docker-compose.yml by adding alert manager, and then configure volumes of prometheus: 🚀
     alertmanager:
     image: prom/alertmanager:latest
