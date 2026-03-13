@@ -172,12 +172,17 @@ setup.kibana:
         annotations:
           summary: "Critical CPU usage detected!"
           description: "Warning! CPU usage has exceeded 10%! Attack in progress!" 🚀
-- Then alertmanager.yml: 🚀
+- Then alertmanager.yml to also SEND ALERTS TO DISCORD CHANNEL on my discord server by custom webhook: 🚀
   route:
-    receiver: 'default-receiver'
+  receiver: 'discord_alert'
 
-  receivers:
-    - name: 'default-receiver' 🚀
+receivers:
+  - name: 'discord_alert'
+    slack_configs:
+      - api_url: 'TUTAJ_WKLEJ_SWOJ_LINK/slack'
+        send_resolved: true
+        title: '[{{ .Status | toUpper }}] {{ .GroupLabels.alertname }}'
+        text: '{{ range .Alerts }}{{ .Annotations.description }}{{ end }}' 🚀
 - Edit file docker-compose.yml by adding alert manager, and then configure volumes of prometheus: 🚀
     alertmanager:
     image: prom/alertmanager:latest
