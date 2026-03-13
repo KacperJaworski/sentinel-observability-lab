@@ -175,7 +175,10 @@ setup.kibana:
 - Then alertmanager.yml to also SEND ALERTS TO DISCORD CHANNEL on my discord server by custom webhook: 🚀
   route:
   receiver: 'discord_alert'
-
+  group_wait: 1s
+  group_interval: 10s
+  repeat_interval: 1m
+  
 receivers:
   - name: 'discord_alert'
     slack_configs:
