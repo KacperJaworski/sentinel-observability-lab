@@ -173,19 +173,18 @@ setup.kibana:
           summary: "Critical CPU usage detected!"
           description: "Warning! CPU usage has exceeded 10%! Attack in progress!" 🚀
 - Then alertmanager.yml to also SEND ALERTS TO DISCORD CHANNEL on my discord server by custom webhook: 🚀
-  route:
+route:
   receiver: 'discord_alert'
   group_wait: 1s
   group_interval: 10s
   repeat_interval: 1m
-  
+
 receivers:
   - name: 'discord_alert'
     slack_configs:
-      - api_url: 'discord_webhook_link/slack'
+      - webhook_url: 'https://discord.com/api/webhooks/1482078156306386987/T6NQdZ6LzzyR0G6kgwJrHYYEl62vqAIO8PPQY91ZdoKhRaOqdlspmVFU5U1XHgTgRyTX'
         send_resolved: true
-        title: '[{{ .Status | toUpper }}] {{ .GroupLabels.alertname }}'
-        text: '{{ range .Alerts }}{{ .Annotations.description }}{{ end }}' 🚀
+        text: 'WARNING! Server attack detected! Critical CPU limit exceeded!' 🚀
 - Edit file docker-compose.yml by adding alert manager, and then configure volumes of prometheus: 🚀
     alertmanager:
     image: prom/alertmanager:latest
@@ -205,7 +204,7 @@ receivers:
 - Now, we have to download bombardier by:
   sudo docker pull alpine/bombardier
 and then start it:
-  sudo docker run --rm alpine/bombardier -c 1000 -d 60s https://192.168.225.128:80
+  sudo docker run --rm alpine/bombardier -c 1000 -d 180s https://192.168.225.128:80
 - Now, on prometheus we see Firing - which means, attack in progress, then we can see notes in alertmanager that attack is in progress
 
   
