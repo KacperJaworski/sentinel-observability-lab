@@ -191,8 +191,13 @@ setup.kibana:
       - prometheus
   and
     in prom section:  - ./alerts.yml:/etc/prometheus/alerts.yml:ro 🚀
-  - Our alertmanager is working on: http://192.168.225.128:9093/#/alerts
-  - We have our alert on prometheus site in section alerts:
+- Our alertmanager is working on: http://192.168.225.128:9093/#/alerts
+- We have our alert on prometheus site in section alerts:
     <img width="1903" height="413" alt="image" src="https://github.com/user-attachments/assets/8bd2b267-e565-4b70-8217-ab05938db755" />
+- Now, we have to download bombardier by:
+  sudo docker pull alpine/bombardier
+and then start it:
+  sudo docker run --rm alpine/bombardier -c 1000 -d 60s https://192.168.225.128:80
+- Now, on prometheus we see Firing - which means, attack in progress, then we can see notes in alertmanager that attack is in progress
 
   
