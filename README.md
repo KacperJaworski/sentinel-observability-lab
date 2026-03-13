@@ -160,3 +160,39 @@ setup.kibana:
 - Grafana is now working: http://192.168.225.128:3000/ -> login: admin password - the same as vm
 - We have to add data source in grafana by writing prometheus URL: http://prometheus:9090
 - We took already exists ID of dashboard to visualize node exporter full [ id = 1860], and cadvisor [id = 14282] and configure them to visualize our containers data, and ubuntu whole server data memory
+- We are adding AlertManager to alert as if CPU usage > 80%, we have to add file alerts.yml: 🚀
+  groups:
+  - name: sentinel_alerts
+    rules:
+      - alert: HighCpuUsage
+        expr: 100 - (avg by (instance) (rate(node_cpu_seconds_total{mode="idle"}[1m])) * 100) > 80
+        for: 30s
+        labels:
+          severity: critical
+        annotations:
+          summary: "Critical CPU usage detected!"
+          description: "Warning! CPU usage has exceeded 80% for the last 30 seconds. Possible stress test or attack in progress!" 🚀
+- Then alertmanager.yml: 🚀
+  route:
+    receiver: 'default-receiver'
+
+  receivers:
+    - name: 'default-receiver' 🚀
+- Edit file docker-compose.yml by adding alert manager, and then configure volumes of prometheus: 🚀
+    alertmanager:
+    image: prom/alertmanager:latest
+    container_name: sentinel-alertmanager
+    ports:
+      - "9093:9093"
+    volumes:
+      - ./alertmanager.yml/:/etc/alertmanager/alertmanager.yml:ro
+    restart: unless-stopped
+    depends_on:
+      - prometheus
+  and
+    in prom section:  - ./alerts.yml:/etc/prometheus/alerts.yml:ro 🚀
+  - Our alertmanager is working on: http://192.168.225.128:9093/#/alerts
+  - We have our alert on prometheus site in section alerts:
+    <img width="1903" height="413" alt="image" src="https://github.com/user-attachments/assets/8bd2b267-e565-4b70-8217-ab05938db755" />
+
+  
