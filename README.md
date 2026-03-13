@@ -159,5 +159,4 @@ setup.kibana:
     restart: unless-stopped 🚀
 - Grafana is now working: http://192.168.225.128:3000/ -> login: admin password - the same as vm
 - We have to add data source in grafana by writing prometheus URL: http://prometheus:9090
-- 
-  
+- We took already exists ID of dashboard to visualize node exporter full [ id = 1860], and cadvisor [id = 14282] and configure them to visualize our containers data, and ubuntu whole server data memory
