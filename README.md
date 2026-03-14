@@ -210,3 +210,5 @@ and then start it:
   [FIRING:1]  (HighCpuUsage node-exporter:9100 critical)
   WARNING! Server attack detected! Critical CPU limit exceeded!
 <img width="508" height="115" alt="image" src="https://github.com/user-attachments/assets/017415cd-5832-4516-9ca2-ee59da757f13" />
+- We are attacking our Nginx by 4 bombardier's host, to peak HighCpuUsage to at least 80%: 🚀
+  for i in {1..4}; do sudo docker run -d --rm alpine/bombardier -c 1000 -d 180s http://192.168.225.128:80; done 🚀
