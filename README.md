@@ -94,7 +94,7 @@ filebeat.inputs:
   paths:
     - /var/log/auth.log
     - /var/log/syslog
-    - /home/kacper/project-sentinel/nginx-logs/*.log
+    - /var/log/nginx/*.log
 
 output.elasticsearch:
   hosts: ["elasticsearch:9200"]
@@ -254,3 +254,6 @@ and then start it:
     annotations:
       summary: "Website is DOWN!"
       description: "Blackbox exporter cnnot reach the Nginx website. It might be crashed!"  🚀
+- We have to add one volume on filebeat in docker-compose.yml:  🚀
+  - ./nginx-logs:/var/log/nginx:ro  🚀
+- 
