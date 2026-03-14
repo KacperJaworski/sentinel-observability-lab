@@ -184,9 +184,16 @@ route:
 receivers:
   - name: 'discord_alert'
     discord_configs:
-      - webhook_url: '${DISCORD_WEBHOOK_URL}'
+      - webhook_url: '{"DISCORD_URL}'
         send_resolved: true
-        message: 'WARNING! Server attack detected! Critical CPU limit exceeded!' 🚀
+        title: '[{{ .Status | toUpper }}] - {{ .GroupLabels.alertname }}'
+        message: >
+          {{ range .Alerts }}
+          **Alert:** {{ .Annotations.summary }}
+          **Description:** {{ .Annotations.description }}
+          **Severity:** {{ .Labels.severity }}
+          ---
+          {{ end }} 🚀
 - Edit file docker-compose.yml by adding alert manager, and then configure volumes of prometheus: 🚀
     alertmanager:
     image: prom/alertmanager:latest
