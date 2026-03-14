@@ -100,7 +100,7 @@ output.elasticsearch:
   hosts: ["elasticsearch:9200"]
 
 setup.kibana:
-  host: "kibana:5601"" 🚀
+  host: "kibana:5601" 🚀
 - We have to change file owner to root by: sudo chown root filebeat.yml and sudo chmod 644 filebeat.yml
 - Now our kibana is working, and we can create dashboards
 - We are creating new file: prometheus.yml -> in this file, we are configuring prometheus, node-exporter to count procesor using and RAM on whole ubuntu server, and cadvisor to count which container using memory. prometheus.yml: 🚀
@@ -167,13 +167,13 @@ setup.kibana:
   - name: sentinel_alerts
     rules:
       - alert: HighCpuUsage
-        expr: 100 - (avg by (instance) (rate(node_cpu_seconds_total{mode="idle"}[1m])) * 100) > 10
+        expr: 100 - (avg by (instance) (rate(node_cpu_seconds_total{mode="idle"}[1m])) * 100) > 80
         for: 10s
         labels:
           severity: critical
         annotations:
           summary: "Critical CPU usage detected!"
-          description: "Warning! CPU usage has exceeded 10%! Attack in progress!" 🚀
+          description: "Warning! CPU usage has exceeded 80%! Attack in progress!" 🚀
 - Then alertmanager.yml to also SEND ALERTS TO DISCORD CHANNEL on my discord server by custom webhook: 🚀
 route:
   receiver: 'discord_alert'
@@ -184,7 +184,7 @@ route:
 receivers:
   - name: 'discord_alert'
     discord_configs:
-      - webhook_url: '{"DISCORD_URL}'
+      - webhook_url: ''YOUR_DISCORD_WEBHOOK_URL''
         send_resolved: true
         title: '[{{ .Status | toUpper }}] - {{ .GroupLabels.alertname }}'
         message: >
@@ -239,7 +239,7 @@ and then start it:
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target
-      - source_labels: [__param_targer]
+      - source_labels: [__param_target]
         target_label: instance
       - target_label: __address__
         replacement: blackbox:9115 🚀
