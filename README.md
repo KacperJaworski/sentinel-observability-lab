@@ -275,3 +275,4 @@ and then start it:
       depends_on:
 - Now, we can see on discord alerts that: [FIRING] -
 Alert: Website is DOWN! Description: Blackbox exporter cnnot reach the Nginx website. It might be crashed! Severity: critical --- Alert: Critical CPU usage detected! Description: Warning! CPU usage has exceeded 80% for the last 30 seconds. Attack in progress! Severity: critical ---
+<img width="265" height="83" alt="Image" src="https://github.com/user-attachments/assets/a4ec4b49-4122-49d2-b4ca-b9b2ded2157c" />
