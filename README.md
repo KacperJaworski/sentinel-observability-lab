@@ -49,14 +49,15 @@ Na wirtualnej maszynie z Ubuntu używam skryptów Ansible do automatycznego wdro
         enabled: yes 🚀
       
 -  ansible-playbook install-docker.yml -K -> to install docker by yaml file
-- Create new yaml file to install nginx by docker compose: 🚀
-    services:
-    nginx:
-      image: nginx:latest
-      container_name: sentinel-nginx
-      ports:
-        - "80:80"
-      restart: unless-stopped 🚀
+- Create new yaml file to install nginx by docker-compose.yml: 🚀
+  nginx:
+    image: nginx:latest
+    container_name: sentinel-nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx-logs:/var/log/nginx
+    restart: unless-stopped 🚀
 - Now our site Nginx is running - ip the same as VM http://192.168.225.128
 - We are increasin mapping limit on linux by: sudo sysctl -w vm.max_map_count=262144
 - Install ElasticSearch by adding to docker-compose.yml: 🚀
@@ -86,19 +87,20 @@ Na wirtualnej maszynie z Ubuntu używam skryptów Ansible do automatycznego wdro
 - kibana - http://192.168.225.128:5601
 - Now we got 3 containers: Nginx, Elasticsearch and Kibana
 - We have to add new yaml file to configure filebeat -> to take logs from Nginx and upload them to Elasticsearch
-- filebeeat.yml: 🚀
-  filebeat.inputs:
+- filebeat.yml: 🚀
+filebeat.inputs:
 - type: log
   enabled: true
   paths:
     - /var/log/auth.log
     - /var/log/syslog
+    - /home/kacper/project-sentinel/nginx-logs/*.log
 
 output.elasticsearch:
   hosts: ["elasticsearch:9200"]
 
 setup.kibana:
-  host: "kibana:5601" 🚀
+  host: "kibana:5601"" 🚀
 - We have to change file owner to root by: sudo chown root filebeat.yml and sudo chmod 644 filebeat.yml
 - Now our kibana is working, and we can create dashboards
 - We are creating new file: prometheus.yml -> in this file, we are configuring prometheus, node-exporter to count procesor using and RAM on whole ubuntu server, and cadvisor to count which container using memory. prometheus.yml: 🚀
@@ -212,3 +214,43 @@ and then start it:
 <img width="508" height="115" alt="image" src="https://github.com/user-attachments/assets/017415cd-5832-4516-9ca2-ee59da757f13" />
 - We are attacking our Nginx by 4 bombardier's host, to peak HighCpuUsage to at least 80%: 🚀
   for i in {1..4}; do sudo docker run -d --rm alpine/bombardier -c 1000 -d 180s http://192.168.225.128:80; done 🚀
+- We are adding blackbox to check if nginx is still working, we have to modificate docker-compose.yml by adding: 🚀
+      blackbox:
+      image: prom/blackbox-exporter:latest
+      container_name: sentinel-blackbox
+      ports:
+        - "9115:9115"
+      restart: unless-stopped 🚀
+  then - we  have to configure prometheus.yml by adding blackbox there: 🚀
+  - job_name: 'blackbox'
+    metrics_path: /probe
+    params:
+      module: [http_2xx]
+    static_configs:
+      - targets:
+        - http://nginx:80
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_targer]
+        target_label: instance
+      - target_label: __address__
+        replacement: blackbox:9115 🚀
+  - We are adding more alerts -> Server is not reachable - eg. NodeExporter, and second -> Nginx (site) is unreachable:  🚀
+  - alert: InstanceDown
+    expr: up == 0
+    for: 30s
+    labels:
+      severity: critical
+    annotations:
+      summary: "Instance {{ $labels.instance }} is down!"
+      description: "The monitoring agent on {{ $labels.instance }} has stopped responding."
+
+  - alert: WebsiteDown
+    expr: probe_success == 0
+    for: 30s
+    labels:
+      severity: critical
+    annotations:
+      summary: "Website is DOWN!"
+      description: "Blackbox exporter cnnot reach the Nginx website. It might be crashed!"  🚀
