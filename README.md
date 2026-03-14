@@ -256,4 +256,15 @@ and then start it:
       description: "Blackbox exporter cnnot reach the Nginx website. It might be crashed!"  🚀
 - We have to add one volume on filebeat in docker-compose.yml:  🚀
   - ./nginx-logs:/var/log/nginx:ro  🚀
-- 
+- Now our filebeat service in docker-compose.yml: 🚀
+    filebeat:
+      image: docker.elastic.co/beats/filebeat:8.12.2
+      container_name: sentinel-filebeat
+      user: root
+      volumes:
+        - ./filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
+        - /var/log:/var/log:ro
+        - ./nginx-logs:/nginx-logs:ro
+      depends_on:
+        - elasticsearch
+      restart: unless-stopped 🚀
