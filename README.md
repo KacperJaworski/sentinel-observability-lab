@@ -213,14 +213,14 @@ receivers:
 - Now, we have to download bombardier by:
   sudo docker pull alpine/bombardier
 and then start it:
-  sudo docker run --rm alpine/bombardier -c 1000 -d 180s http://192.168.225.128:80
+  sudo docker run --rm alpine/bombardier -c 1000 -d 300s http://192.168.225.128:80
 - Now, on prometheus we see Firing - which means, attack in progress, then we can see notes in alertmanager that attack is in progress
 - By configuring discord-alertmanager webhook, we can see that HighCpuUsage critical:
   [FIRING:1]  (HighCpuUsage node-exporter:9100 critical)
   WARNING! Server attack detected! Critical CPU limit exceeded!
 <img width="508" height="115" alt="image" src="https://github.com/user-attachments/assets/017415cd-5832-4516-9ca2-ee59da757f13" />
 - We are attacking our Nginx by 4 bombardier's host, to peak HighCpuUsage to at least 80%: 🚀
-  for i in {1..4}; do sudo docker run -d --rm alpine/bombardier -c 1000 -d 180s http://192.168.225.128:80; done 🚀
+  for i in {1..4}; do sudo docker run -d --rm alpine/bombardier -c 1000 -d 300s http://192.168.225.128:80; done 🚀
 - We are adding blackbox to check if nginx is still working, we have to modificate docker-compose.yml by adding: 🚀
       blackbox:
       image: prom/blackbox-exporter:latest
@@ -273,5 +273,5 @@ and then start it:
         - /var/log:/var/log:ro
         - ./nginx-logs:/nginx-logs:ro
       depends_on:
-        - elasticsearch
-      restart: unless-stopped 🚀
+- Now, we can see on discord alerts that: [FIRING:1]  (HighCpuUsage node-exporter:9100 critical)
+WARNING! Server attack detected! Critical CPU limit exceeded! and 
