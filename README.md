@@ -1,4 +1,4 @@
-# Project Sentinel: Full-Stack Observability & Resilience Lab
+# sentinel-observability-lab
 
 ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
 ![Ansible](https://img.shields.io/badge/ansible-%231A1918.svg?style=for-the-badge&logo=ansible&logoColor=white)
