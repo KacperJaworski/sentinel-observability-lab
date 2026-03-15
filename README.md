@@ -13,7 +13,7 @@
 This laboratory environment simulates a production-grade observability stack built from scratch on an Ubuntu Server. 
 Instead of relying on cloud-managed services, this project demonstrates hands-on experience in provisioning infrastructure (Ansible), containerizing services (Docker), generating synthetic traffic (DDoS simulation), and monitoring both logs and hardware metrics in real-time.
 
-    ![Architecture & Data Flow](images/sentinel-architecture.png)
+![Architecture & Data Flow](images/sentinel-architecture.png)
 
 ## Features
 - **Infrastructure as Code (IaC):** Automated Docker provisioning and service management using Ansible.
