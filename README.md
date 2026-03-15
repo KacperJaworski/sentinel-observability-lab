@@ -279,3 +279,5 @@ Alert: Website is DOWN! Description: Blackbox exporter cnnot reach the Nginx web
 <img width="1907" height="810" alt="Image" src="https://github.com/user-attachments/assets/5e23a1bb-c732-48e6-a430-5f11ecef7944" />
 <img width="1656" height="911" alt="Image" src="https://github.com/user-attachments/assets/bbd95c2d-e9e6-4409-9abd-ba6c1f3359ed" />
 <img width="1667" height="941" alt="Image" src="https://github.com/user-attachments/assets/e9752b91-fc95-4598-978d-4f7c1e56bd5f" />
+- We are creating dashboard in Kibana, with total request volume (nginx logs) -> amount of logs, traffic source analysis (bombardier vs user), http response cod (error404 vs 200OK), raw logs stream -> we can see source IP from atacking person, date, code status, and attack-name (user-agent)
+   <img width="1902" height="1064" alt="Image" src="https://github.com/user-attachments/assets/e315404c-f71a-43b9-9e62-5810c31b9037" />
