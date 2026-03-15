@@ -1,0 +1,21 @@
+# Project Specific
+nginx-logs/
+*.log
+
+# System Files
+.DS_Store
+Thumbs.db
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Ansible
+*.retry
+
+# Security
+*.env
+.env
+secrets.yml
