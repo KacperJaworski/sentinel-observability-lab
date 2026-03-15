@@ -35,7 +35,8 @@ Visualizing 13.6M logs during a simulated DDoS attack. Bombardier traffic (100%)
 
 ### 2. Infrastructure Meltdown (Grafana)
 Monitoring a critical CPU spike (95.6%) triggered by the Bombardier stress test, using Node Exporter and cAdvisor dashboards.
-![Grafana CPU Spike](images/grafana-node-exporter-dashboard.png)
+![Node Exporter Dashboard](images/grafana-node-exporter-dashboard.png)
+![cAdvisor Dashboard](images/grafana-cadvisor-dashboard.png)
 
 ### 3. Incident Alerting (Discord Webhook)
 Real-time critical alerts delivered from Prometheus/Alertmanager directly to Discord during the attack.
