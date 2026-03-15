@@ -1,7 +1,7 @@
 # PROJECT NOTES Project Sentinel: Full-Stack Observability & Resilience Lab
 
 STACK:
-Vmware Workstation Pro | Ubuntu | Ansible | Docker | Nginx | Bombardier | Filebeat | ELK ElasticSearch + Kibana | Prometheus + NodeExporter + cAdvisor + Alert Manager | Grafana
+Vmware Workstation Pro | Ubuntu | Ansible | Docker | Nginx | Bombardier | Filebeat | ELK ElasticSearch + Kibana | Prometheus + NodeExporter + cAdvisor + Alert Manager + Blackbox | Grafana
 
 VMware Workstation Pro: Program do wirtualizacji, pozwalajacy na postawienie roznych OS na jednym komputerze
 Ubuntu Server: Czysty system operacyjny Linux
