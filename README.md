@@ -55,9 +55,9 @@ Idempotent Docker installation via `install-docker.yml`.
 3. **Trigger the DDoS simulation (Bombardier):**
   for i in {1..4}; do sudo docker run -d --rm alpine/bombardier -c 1000 -d 300s http://<YOUR_IP>:80; done
 4. **Access the dashboards:**
-   *Grafana:* http://<YOUR_IP>:3000
-   *Kibana:* http://<YOUR_IP>:5601
-   *Prometheus Alerts:* http://<YOUR_IP>:9090/alerts
+- *Grafana:* http://<YOUR_IP>:3000
+- *Kibana:* http://<YOUR_IP>:5601
+- *Prometheus Alerts:* http://<YOUR_IP>:9090/alerts
 
 
 
