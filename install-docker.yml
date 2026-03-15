@@ -1,0 +1,16 @@
+# Ansible playbook for automated Docker installation and service provisioning
+---
+- name: Install Docker on the server
+  hosts: localhost
+  become: yes
+  tasks:
+    - name: Install Docker package
+      apt:
+        name: docker.io
+        state: present
+        update_cache: yes
+    - name: Ensure Docker service is running
+      service:
+        name: docker
+        state: started
+        enabled: yes
