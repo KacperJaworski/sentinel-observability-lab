@@ -1,0 +1,30 @@
+# Prometheus alerting rules: defines critical thresholds for CPU usage, instance availability, and website uptime
+groups:
+  - name: sentinel_alerts
+    rules:
+      - alert: HighCpuUsage
+        expr: 100 - (avg by (instance) (rate(node_cpu_seconds_total{mode="idle"}[1m])) * 100) > 80
+        for: 10s
+        labels:
+          severity: critical
+        annotations:
+          summary: "Critical CPU usage detected!"
+          description: "Warning! CPU usage has exceeded 80% for the last 30 seconds. Attack in progress!"
+
+      - alert: InstanceDown
+        expr: up == 0
+        for: 30s
+        labels:
+          severity: critical
+        annotations:
+          summary: "Instance {{ $labels.instance }} is down!"
+          description: "The monitoring agent on {{ $labels.instance }} has stopped responding."
+
+      - alert: WebsiteDown
+        expr: probe_success == 0
+        for: 30s
+        labels:
+          severity: critical
+        annotations:
+          summary: "Website is DOWN!"
+          description: "Blackbox exporter cannot reach the Nginx website. It might be crashed!"  
