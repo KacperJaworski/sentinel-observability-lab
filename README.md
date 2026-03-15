@@ -11,7 +11,7 @@
 This laboratory environment simulates a production-grade observability stack built from scratch on an Ubuntu Server. 
 Instead of relying on cloud-managed services, this project demonstrates hands-on experience in provisioning infrastructure (Ansible), containerizing services (Docker), generating synthetic traffic (DDoS simulation), and monitoring both logs and hardware metrics in real-time.
 
-![Architecture & Data Flow](img/sentinel-architecture.png)
+![Architecture & Data Flow](images/sentinel-architecture.png)
 
 ## Features
 - **Infrastructure as Code (IaC):** Automated Docker provisioning and service management using Ansible.
@@ -31,19 +31,19 @@ Instead of relying on cloud-managed services, this project demonstrates hands-on
 
 ### 1. Security Operations Center (Kibana)
 Visualizing 13.6M logs during a simulated DDoS attack. Bombardier traffic (100%) is successfully isolated from normal users, with HTTP 200/404 ratios tracked.
-![Kibana Dashboard](img/kibana-sentinel-dashboard.png)
+![Kibana Dashboard](images/kibana-sentinel-dashboard.png)
 
 ### 2. Infrastructure Meltdown (Grafana)
 Monitoring a critical CPU spike (95.6%) triggered by the Bombardier stress test, using Node Exporter and cAdvisor dashboards.
-![Grafana CPU Spike](img/grafana-node-exporter-dashboard.png)
+![Grafana CPU Spike](images/grafana-node-exporter-dashboard.png)
 
 ### 3. Incident Alerting (Discord Webhook)
 Real-time critical alerts delivered from Prometheus/Alertmanager directly to Discord during the attack.
-![Discord Alerts](img/discord-alerts.png)
+![Discord Alerts](images/discord-alerts.png)
 
 ### 4. Automated Provisioning (Ansible)
 Idempotent Docker installation via `install-docker.yml`.
-![Ansible Playbook](img/ansible-docker-install-completed.png)
+![Ansible Playbook](images/ansible-docker-install-completed.png)
 
 ## Usage / Reproducing the Lab
 *Note: All configuration files (`docker-compose.yml`, `prometheus.yml`, etc.) are included in this repository.*
